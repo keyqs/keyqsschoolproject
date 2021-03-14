@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'quote.dart';
 import 'list.dart';
+import 'quote.dart';
+
+var listOfFavour = <Quote>[];
 
 void main() => runApp(MaterialApp(
       home: QuoteList(),

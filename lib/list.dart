@@ -1,5 +1,6 @@
 import 'package:floppa/formula_block.dart';
 import 'package:flutter/material.dart';
+
 import 'quote.dart';
 import 'main.dart';
 
@@ -14,6 +15,11 @@ class Context extends StatefulWidget {
 }
 
 class _QuoteState extends State<QuoteList> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Quote> quotes = [
@@ -57,51 +63,67 @@ class _QuoteState extends State<QuoteList> {
               title: Text("История"),
               leading: Icon(Icons.bookmark_border_outlined, color: Colors.red),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                  builder: (BuildContext c) {
-                    var flatButton = FlatButton(
-                      child: Text('1'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    );
-                    return Scaffold(
-                      appBar: AppBar(
-                          backgroundColor: Colors.red, title: Text('My Page')),
-                      body: Column(children: <Widget>[
-                        Text('1'),
-                        Container(
-                          color: Colors.grey[800],
-                          height: 2.0,
-                          width: 350,
-                        ),
-                      ]),
-                    );
-                  },
-                ));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext c) => FavouritePage(),
+                    ));
               }),
           ListTile(
               title: Text("Избранное"),
               leading: Icon(Icons.star, color: Colors.amber),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                  builder: (BuildContext c) {
-                    var flatButton = FlatButton(
-                      child: Text('1'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    );
-                    return Scaffold(
-                      appBar: AppBar(
-                          backgroundColor: Colors.red, title: Text('My Page')),
-                      body: Center(
-                        child: flatButton,
-                      ),
-                    );
-                  },
-                ));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext c) => FavouritePage(),
+                    ));
               })
+        ],
+      )),
+    );
+  }
+}
+
+class FavouritePage extends StatefulWidget {
+  @override
+  _FavouritePageState createState() => _FavouritePageState();
+}
+
+class _FavouritePageState extends State<FavouritePage> {
+  var localList = <Quote>[];
+  @override
+  void initState() {
+    localList = listOfFavour;
+    print('init');
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  listOfFavour.clear();
+                  setState(() {
+                    localList.clear();
+                  });
+                },
+                child: Icon(Icons.delete_forever_outlined))
+          ],
+          title: Text('избранный жумайсынба'),
+          centerTitle: true,
+          backgroundColor: Colors.red),
+      body: SafeArea(
+          child: ListView(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        children: [
+          Column(
+            children:
+                localList.map((quote) => FormulaBlock(quote: quote)).toList(),
+          )
         ],
       )),
     );

@@ -15,7 +15,9 @@ class _FormulaBlockState extends State<FormulaBlock> {
   Route _routeFormulaPage() {
     return PageRouteBuilder(
       transitionDuration: Duration(milliseconds: 300),
-      pageBuilder: (context, animation, secondaryAnimation) => FormulaPage(),
+      pageBuilder: (context, animation, secondaryAnimation) => FormulaPage(
+        quote: widget.quote,
+      ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(0, 10);
         var end = Offset.zero;
